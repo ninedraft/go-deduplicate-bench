@@ -26,7 +26,7 @@ func init() {
 }
 
 func DeduplicateMap[E comparable](slice []E) []E {
-	set := make(map[E]struct{}, len(slice)/16)
+	set := make(map[E]struct{})
 	var i int
 	for _, x := range slice {
 		_, ok := set[x]
