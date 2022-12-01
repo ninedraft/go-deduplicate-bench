@@ -7,22 +7,21 @@ import (
 	"golang.org/x/exp/slices"
 )
 
-var NoDuplicates []int
-var ManyDuplicates []int
-
-const n = 10_000
-
-func init() {
+func GenerateWith(n int, duplicates bool) []int {
+	var xx = make([]int, n)
 	for i := 0; i < n; i++ {
-		NoDuplicates = append(NoDuplicates, i)
-		ManyDuplicates = append(ManyDuplicates, i%100)
+		x := i
+		if duplicates {
+			x %= 100
+		}
+		xx[i] = x
 	}
 
 	rnd := rand.NewSource(100)
 	rand.New(rnd).Shuffle(n, func(i, j int) {
-		NoDuplicates[i], NoDuplicates[j] = NoDuplicates[j], NoDuplicates[i]
-		ManyDuplicates[i], ManyDuplicates[j] = ManyDuplicates[j], ManyDuplicates[i]
+		xx[i], xx[j] = xx[j], xx[i]
 	})
+	return xx
 }
 
 func DeduplicateMap[E comparable](slice []E) []E {

@@ -7,11 +7,16 @@ import (
 	"golang.org/x/exp/slices"
 )
 
+const N = 10_000
+
 var _BenchmarkMapNoDuplicates []int
 
 func BenchmarkMapNoDuplicates(bench *testing.B) {
 	for i := 0; i < bench.N; i++ {
-		_BenchmarkMapNoDuplicates = deduplicate.DeduplicateMap(deduplicate.NoDuplicates)
+		bench.StopTimer()
+		xx := deduplicate.GenerateWith(N, false)
+		bench.StartTimer()
+		_BenchmarkMapNoDuplicates = deduplicate.DeduplicateMap(xx)
 	}
 }
 
@@ -19,7 +24,11 @@ var _BenchmarkMapManyDuplicates []int
 
 func BenchmarkMapManyDuplicates(bench *testing.B) {
 	for i := 0; i < bench.N; i++ {
-		_BenchmarkMapManyDuplicates = deduplicate.DeduplicateMap(deduplicate.ManyDuplicates)
+		bench.StopTimer()
+		xx := deduplicate.GenerateWith(N, true)
+		bench.StartTimer()
+
+		_BenchmarkMapManyDuplicates = deduplicate.DeduplicateMap(xx)
 	}
 }
 
@@ -27,7 +36,11 @@ var _BenchmarkSortNoDuplicates []int
 
 func BenchmarkSortNoDuplicates(bench *testing.B) {
 	for i := 0; i < bench.N; i++ {
-		_BenchmarkSortNoDuplicates = deduplicate.DeduplicateSort(deduplicate.NoDuplicates)
+		bench.StopTimer()
+		xx := deduplicate.GenerateWith(N, false)
+		bench.StartTimer()
+
+		_BenchmarkSortNoDuplicates = deduplicate.DeduplicateSort(xx)
 	}
 }
 
@@ -35,7 +48,11 @@ var _BenchmarkSortManyDuplicates []int
 
 func BenchmarkSortManyDuplicates(bench *testing.B) {
 	for i := 0; i < bench.N; i++ {
-		_BenchmarkSortManyDuplicates = deduplicate.DeduplicateSort(deduplicate.ManyDuplicates)
+		bench.StopTimer()
+		xx := deduplicate.GenerateWith(N, true)
+		bench.StartTimer()
+
+		_BenchmarkSortManyDuplicates = deduplicate.DeduplicateSort(xx)
 	}
 }
 
